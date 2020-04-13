@@ -2,21 +2,20 @@ from conans import ConanFile, CMake, tools
 import os, re
 
 class Conan(ConanFile):
-    name            = "Template"
-    #version         = "1.0"
+    name            = "Logger"
     license         = "freeware"
     repoUrl         = "https://github.com/ssitkowx"
     url             = repoUrl + '/' + name + '.git'
     downloadsPath   = "C:/Users/sitko/.conan/download"
-    description     = "Template for projects and packages"
+    description     = "Logs informations"
     settings        = "os", "compiler", "build_type", "arch"
     options         = {"shared": [True, False]}
     default_options = "shared=False"
     generators      = "cmake"
     author          = "sylsit"
     requires        = "gtest/1.8.1@bincrafters/stable"
-    build_requires  = []
-    
+    build_requires  = ["Utils/1.0@ssitkowx/stable"]
+
     def createDownload(self):
         if not os.path.isdir(self.downloadsPath):
             os.mkdir(self.downloadsPath)

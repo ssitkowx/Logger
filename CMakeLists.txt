@@ -1,4 +1,4 @@
-PROJECT(Template)
+PROJECT(Logger)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 
 SET                   (ProjectName Project)
@@ -64,12 +64,6 @@ SET(LibrariesPathsLists "")
 IF (NOT CONAN_LIBS STREQUAL "")
 	GET_LIBRARIES_PATHS_LISTS(LibrariesPathsLists)
 ENDIF()
-
-SOURCE_GROUP               (TREE                       	      ${ProjectIncludePath} PREFIX "" FILES ${ProjectFilesAndFolders})
-ADD_EXECUTABLE             (${ProjectName}                    ${ProjectFilesAndFolders})
-TARGET_INCLUDE_DIRECTORIES (${ProjectName} PUBLIC             ${ProjectSubdirectoriesPathsLists})
-TARGET_LINK_LIBRARIES      (${ProjectName}                    ${PackagesLibsNames})
-TARGET_COMPILE_FEATURES    (${ProjectName} PUBLIC cxx_std_17)
 
 SOURCE_GROUP               (TREE                       	      ${TestIncludePath} PREFIX "" FILES ${TestFilesAndFolders})
 LINK_DIRECTORIES           (${TestsName}                      ${BuildPath}/lib)
