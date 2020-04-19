@@ -29,6 +29,9 @@ class Conan(ConanFile):
         os.chdir(self.downloadsPath + '/' + name + '/Conan')
     
     def createPackage(self, user, channel):
+        print ("!!!!!!!!!!!!!")
+        print (user)
+        print (channel)
         self.run('conan create . ' + user + '/' + channel)
     
     def source(self):
