@@ -32,7 +32,7 @@ class Conan(ConanFile):
         self.run('conan create . ' + user + '/' + channel)
     
     def source(self):
-        for packages in self.build_requires:
+        for packages in ["Utils/1.0@ssitkowx/stable"]:
             print ("source Logger !!!")
             print (packages)
             package = (re.split('[/@]', packages, 3))
