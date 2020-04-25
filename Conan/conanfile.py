@@ -16,7 +16,7 @@ class Conan(ConanFile):
     author          = "sylsit"
     exports_sources = '../*'
     requires        = "gtest/1.8.1@bincrafters/stable"
-    build_requires  = ["Utils/1.0@ssitkowx/stable"]
+    buildPackages   = ["Utils/1.0@ssitkowx/stable"]
 
     def createDownload(self):
         if not os.path.isdir(self.downloadsPath):
@@ -32,7 +32,7 @@ class Conan(ConanFile):
         self.run('conan create . ' + user + '/' + channel)
     
     def source(self):
-        for packages in ["Utils/1.0@ssitkowx/stable"]:
+        for packages in self.buildPackages:
             print ("source Logger !!!")
             print (packages)
             package = (re.split('[/@]', packages, 3))
