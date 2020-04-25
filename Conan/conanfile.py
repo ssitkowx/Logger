@@ -19,24 +19,19 @@ class Conan(ConanFile):
     build_requires  = ["Utils/1.0@ssitkowx/stable"]
 
     def createDownload(self):
-        print ("createDownload")
         if not os.path.isdir(self.downloadsPath):
             os.mkdir(self.downloadsPath)
         os.chdir(self.downloadsPath)
         
     def cloneRepo(self, name):
-        print ("cloneRepo")
-        print (name)
         if not os.path.isdir(name):
             self.run('git clone ' + self.repoUrl + '/' + name + '.git')
         os.chdir(self.downloadsPath + '/' + name + '/Conan')
     
     def createPackage(self, user, channel):
-        print ("createPackage")
         self.run('conan create . ' + user + '/' + channel)
     
     def source(self):
-        print ("source")
         for packages in self.build_requires:
             package = (re.split('[/@]', packages, 3))
             name    = package[0]
@@ -49,12 +44,10 @@ class Conan(ConanFile):
             self.createPackage  (user,channel)
 
     def build(self):
-        print ("build")
         projectPath  = os.getcwd().replace('\Conan','')
         projectBuild = projectPath + '\\Build'
         
         if not os.path.exists(projectPath + '\\CMakeLists.txt'):
-            self.source (self)
             projectPath  = self.downloadsPath + '\\' + self.name
             projectBuild = os.getcwd() + '\\Build'
 
@@ -68,11 +61,9 @@ class Conan(ConanFile):
         tools.replace_in_file(projectPath + "\\CMakeLists.txt", "Template", self.name, False)
         
     def package(self):
-        print ("package") 
         projectPath = os.getcwd().replace('\Conan','')
         
         if not os.path.exists(projectPath + '\\CMakeLists.txt'):
-            self.source (self)
             projectPath = self.downloadsPath + '\\' + self.name
     
         self.copy('*.h'     , dst='include', src= projectPath + '\\Project' , keep_path=False)
