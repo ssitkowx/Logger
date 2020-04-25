@@ -33,11 +33,9 @@ class Conan(ConanFile):
     
     def source(self):
         for packages in self.buildPackages:
-            print ("source Logger !!!")
-            print (packages)
             package = (re.split('[/@]', packages, 3))
             name    = package[0]
-            #version = package[1]
+            version = package[1]
             user    = package[2]
             channel = package[3]
 
