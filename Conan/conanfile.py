@@ -15,7 +15,7 @@ class Conan(ConanFile):
     generators      = "cmake"
     author          = "sylsit"
     exports_sources = '../*'
-    requires        = "gtest/1.8.1@bincrafters/stable"
+    requires        = ["gtest/1.8.1@bincrafters/stable"]
     buildPackages   = ["Utils/1.0@ssitkowx/stable"]
 
     def createDownload(self):
@@ -73,4 +73,6 @@ class Conan(ConanFile):
         self.copy('*.dylib*', dst='lib'    , src= projectPath + '\Build\lib', keep_path=False)
         self.copy('*.so'    , dst='lib'    , src= projectPath + '\Build\lib', keep_path=False)
         self.copy('*.a'     , dst='lib'    , src= projectPath + '\Build\lib', keep_path=False)
-        
+
+    def package_info(self):
+        self.cpp_info.libs = [self.name]
