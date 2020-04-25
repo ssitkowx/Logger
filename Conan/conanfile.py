@@ -29,9 +29,6 @@ class Conan(ConanFile):
         os.chdir(self.downloadsPath + '/' + name + '/Conan')
     
     def createPackage(self, user, channel):
-        print ("!!!!!!!!!!!!!")
-        print (user)
-        print (channel)
         self.run('conan create . ' + user + '/' + channel)
     
     def source(self):
@@ -51,6 +48,7 @@ class Conan(ConanFile):
         projectBuild = projectPath + '\\Build'
         
         if not os.path.exists(projectPath + '\\CMakeLists.txt'):
+            self.source (self)
             projectPath  = self.downloadsPath + '\\' + self.name
             projectBuild = os.getcwd() + '\\Build'
 
@@ -67,6 +65,7 @@ class Conan(ConanFile):
         projectPath = os.getcwd().replace('\Conan','')
         
         if not os.path.exists(projectPath + '\\CMakeLists.txt'):
+            self.source (self)
             projectPath = self.downloadsPath + '\\' + self.name
     
         self.copy('*.h'     , dst='include', src= projectPath + '\\Project' , keep_path=False)
