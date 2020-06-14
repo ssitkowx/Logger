@@ -16,6 +16,7 @@ class Conan(ConanFile):
     default_options = "shared=False"
     generators      = "cmake"
     author          = "sylsit"
+    exports         = "*"
     exports_sources = '../*'
     requires        = ["gtest/1.8.1@bincrafters/stable"]
     DownloadsPath   = "C:/Users/sitko/.conan/download"
