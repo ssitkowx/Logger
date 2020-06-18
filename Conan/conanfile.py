@@ -28,22 +28,25 @@ class Conan(ConanFile):
 
     def build (self):
         projectPath  = os.getcwd ().replace ('\Conan','')
-        projectBuild = projectPath + '\\Build'
+        buildPath = projectPath + '\\Build'
         
         if not os.path.exists (projectPath + '\\CMakeLists.txt'):
-            projectPath  = self.downloadsPath + '\\' + self.name
-            projectBuild = os.getcwd() + '\\Build'
+            projectPath = self.downloadsPath + '\\' + self.name
+            buildPath   = os.getcwd() + '\\Build'
             
         tools.replace_in_file (projectPath + "\\CMakeLists.txt", "PackageTempName", self.name, False)
 
         if self.settings.os == 'Windows' and self.settings.compiler == 'Visual Studio':
             packagesPaths = ConanPackages.GetPaths (self, self.PackagesPath, self.Packages)
             cmake         = CMake(self)
-
+            
+            conanPath = os.getcwd () + "\\PackagesProperties.txt"
+            PackagesPropertiesFileHandler = open (conanPath, "w")
             for packagePathKey, packagePathValue in packagesPaths.items ():
-                cmake.definitions [packagePathKey] = packagePathValue
+                PackagesPropertiesFileHandler.writelines (packagePathKey + "=" + packagePathValue + "\n")
+            PackagesPropertiesFileHandler.close ()
 
-            cmake.configure (source_dir = projectPath, build_dir = projectBuild)
+            cmake.configure (source_dir = projectPath, build_dir = buildPath)
             cmake.build ()
         else:
             raise Exception ('Unsupported platform or compiler')
