@@ -12,10 +12,6 @@ Configuration:
 
 3. You need update your remotes:
    Conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-   
-4. Edit conanfile.py. For example:
-  - name     = "Template"                                          -> Display
-  - Packages = ["packageName/version@owner/channel", next package] -> ["Logger/1.0@ssitkowx/stable", "Utils/2.3@ssitkowx/testing"] 
 
 Builidng:
 1. Go to Conan folder,
@@ -27,4 +23,5 @@ Builidng:
 
 Tip:
 - It is unacceptable if the package calls the package (recursion),
-- The first time when you run python, packages may be missing. Please follow the python suggestion to install them.
+- The first time when you run python, packages may be missing. Please follow the python suggestion to install them,
+- To install gtest and gmock packages for specified options and settings type "conan install . --build gtest".

@@ -81,6 +81,7 @@ SET          (BuildPath ${CurrentPath}/Build)
 REMOVE_FILES ("${BuildPath}")
 
 SOURCE_GROUP               (TREE                       	      ${ProjectIncludePath} PREFIX "" FILES ${ProjectFilesAndFolders})
+LINK_DIRECTORIES           (${LibraryName}                    ${PackageLibsPaths})
 ADD_LIBRARY                (${LibraryName} STATIC             ${ProjectFilesAndFolders})
 TARGET_INCLUDE_DIRECTORIES (${LibraryName} PUBLIC             ${ProjectPathsLists} ${PackageIncludesPaths})
 TARGET_LINK_LIBRARIES      (${LibraryName}    		          ${CONAN_LIBS_GTEST})
