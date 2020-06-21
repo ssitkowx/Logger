@@ -24,12 +24,12 @@ class Logger
     public:
         enum class ELogLevel : uint8_t
         {
-            eLogNone,
-            eLogError,
-            eLogWarning,
-            eLogInfo,
-            eLogDebug,
-            eLogVerbose
+            eNone,
+            eError,
+            eWarning,
+            eInfo,
+            eDebug,
+            eVerbose
         };
 
 
