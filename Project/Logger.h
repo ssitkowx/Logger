@@ -32,7 +32,6 @@ class Logger
             eVerbose
         };
 
-
         static void     SetInstance (Logger * v_instance) { instance = v_instance; }
         static Logger * GetInstance (void)                { return instance; }
 
