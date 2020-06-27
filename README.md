@@ -19,8 +19,9 @@ The solution project has been divided into three parts:
 - GTest and GMock tooked from https://bintray.com/bincrafters/public-conan/gtest%3Abincrafters/1.8.1%3Astable#
 - You should update yours remote with 'conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan'
 - You should update yours conanfile.py according to the example below:
-  - name     = "Template"                                          -> Display
-  - Packages = ["packageName/version@owner/channel", next package] -> ["Logger/1.0@ssitkowx/stable", "Utils/2.3@ssitkowx/testing"] 
+  - name        = "Template"                                          -> Display
+  - Packages    = ["packageName/version@owner/channel", next package] -> ["Logger/1.0@ssitkowx/stable", "Utils/2.3@ssitkowx/testing"] 
+  - description = "Template for projects and packages"                -> "General class for display"
 
 # V. Builidng:
 - Go to 'Conan' folder and open git bash console,
