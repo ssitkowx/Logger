@@ -5,12 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <string>
+#include <memory>
 
 ///////////////////////////////////////////////////////////////////////////////
 /////////////////////////// MACROS/DEFINITIONS ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#define SET_LOGGER_INST(INSTANCE) Logger::SetInstance (INSTANCE);
+//#define SET_LOGGER_INST(INSTANCE) Logger::SetInstance (INSTANCE);
 
 ///////////////////////////////////////////////////////////////////////////////
 /////////////////////////// CLASSES/STRUCTURES ////////////////////////////////
@@ -18,9 +19,6 @@
 
 class Logger
 {
-    private:
-        static Logger * instance;
-
     public:
         enum class ELogLevel : uint8_t
         {
@@ -32,8 +30,7 @@ class Logger
             eVerbose
         };
 
-        static void     SetInstance (Logger * v_instance) { instance = v_instance; }
-        static Logger * GetInstance (void)                { return instance; }
+        static Logger * GetInstance (void) { return NULL; }
 
         template <class DERIVED_TYPE, typename... ARGS>
         void Log (const ELogLevel      v_eLogLevel,
@@ -41,7 +38,7 @@ class Logger
                   const std::string && v_msg,
                   ARGS &&...           v_args)
         {
-            static_cast <DERIVED_TYPE &>(* this).Log (v_eLogLevel, std::move (v_module), std ::move (v_msg), v_args...);
+            static_cast <DERIVED_TYPE &>(* this).Log (v_eLogLevel, std::move (v_module), std::move (v_msg), v_args...);
         }
 };
 
