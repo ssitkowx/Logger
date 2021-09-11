@@ -1,0 +1,30 @@
+{
+ "options": [
+  [
+   "shared",
+   "False"
+  ],
+  [
+   "gtest:build_gmock",
+   "True"
+  ],
+  [
+   "gtest:fPIC",
+   "True"
+  ],
+  [
+   "gtest:no_main",
+   "False"
+  ],
+  [
+   "gtest:shared",
+   "False"
+  ]
+ ],
+ "root": {
+  "name": "Logger",
+  "version": "1.0",
+  "user": null,
+  "channel": null
+ }
+}
