@@ -37,7 +37,7 @@ class conanPackages:
             hashFolder         = os.listdir (path)
             packageIncludePath = path + '/' + hashFolder [0] + '/include'
             packageLibPath     = path + '/' + hashFolder [0] + '/lib'
-            packageName        = 'lib' + packageComponent ['name'] + '.a'
+            packageName        = packageComponent ['name'] + '.a'
              
             if not os.path.isdir (packageIncludePath):
                 raise Exception ('%s. Is not package include path', packageIncludePath)
