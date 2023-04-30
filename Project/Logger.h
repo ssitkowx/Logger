@@ -24,7 +24,7 @@ class Logger
             eVerbose
         };
 
-        static Logger * GetInstance (void) { return NULL; }
+        static Logger * GetInst (void) { return NULL; }
 
         template <class DERIVED_TYPE, typename... ARGS>
         constexpr void Log (const ELogLevel  v_eLogLevel,
