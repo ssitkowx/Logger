@@ -1,69 +1,63 @@
-from conans import ConanFile, CMake, tools
-from conanPackages import conanPackages  
 import os
 
+from conan             import ConanFile
+from conanPackages     import conanPackages
+from conan.tools.files import copy, load
+from conan.tools.cmake import CMake, cmake_layout
+
 class Conan(ConanFile):
-    name            = "Logger"
-    version         = "1.1"
+    name            = "logger"
+    version         = "1.2"
     user            = "ssitkowx"
     channel         = "stable"
     license         = "freeware"
     repoUrl         = "https://github.com/ssitkowx"
     url             = repoUrl + '/' + name + '.git'
-    description     = "Template for projects and packages"
+    description     = "General class for gpio"
     settings        = "os", "compiler", "build_type", "arch"
-    options         = {"shared": [True, False]}
-    default_options = "shared=False"
-    generators      = "cmake"
+    options         = { "shared": [True, False] }
+    default_options = { "shared": False         }
+    generators      = "CMakeDeps", "CMakeToolchain"
     author          = "sylsit"
     exports         = "*"
-    exports_sources = '../*'
     requires        = ["gtest/cci.20210126"]
-    packagesPath    = "/home/sylwester/.conan/data"
-    downloadsPath   = "/home/sylwester/.conan/download"
+    downloadPath    = "/home/sylwester/.conan2/download"
+    repoPath        = downloadPath + '/Repo'
+    packagePath     = downloadPath + '/Package'
     packages        = []
 
-    def source (self):   
-        conanPackages.install (self, self.downloadsPath, self.repoUrl, self.packages)
+    def layout (self):
+        projectPath = os.getcwd ().replace ('/Conan','')
+        cmake_layout (self, src_folder = projectPath, build_folder = projectPath + '/Build')
+
+    def source (self):
+        cmake_file = load (self, "CMakeLists.txt")
+        conanPackages.install (self, self.repoPath, self.repoUrl, self.packages)
 
     def build (self):
-        projectPath  = os.getcwd ().replace ('/Conan','')
-        buildPath = projectPath + '/Build'
-        
-        if not os.path.exists (projectPath + '/CMakeLists.txt'):
-            projectPath = self.downloadsPath + '/' + self.name
-            buildPath   = os.getcwd() + '/Build'
-            
-        tools.replace_in_file (projectPath + "/CMakeLists.txt", "PackageTempName", self.name, False)
-
         if self.settings.os == 'Linux' and self.settings.compiler == 'gcc':
-            packagesPaths = conanPackages.getPaths (self, self.packagesPath, self.packages)
-            cmake         = CMake(self)
-            
-            conanPath = os.getcwd () + "/packagesProperties.txt"
-            packagesPropertiesFileHandler = open (conanPath, "w")
-            for packagePathKey, packagePathValue in packagesPaths.items ():
-                packagesPropertiesFileHandler.writelines (packagePathKey + "=" + packagePathValue + "\n")
-            packagesPropertiesFileHandler.close ()
-            
-            cmake.configure (source_dir = projectPath, build_dir = buildPath)
-            cmake.build ()
+            cmake = CMake (self)
+            cmake.configure ()
+            cmake.build     ()
         else:
             raise Exception ('Unsupported platform or compiler')
-        
-    def package (self):   
-        projectPath = os.getcwd ().replace ('/Conan','')
-        
-        if not os.path.exists (projectPath + '/CMakeLists.txt'):
-            projectPath = self.downloadsPath + '/' + self.name
-    
-        self.copy ('*.h'     , dst = 'include', src = projectPath + '/Project' , keep_path = False)
-        self.copy ('*.hxx'   , dst = 'include', src = projectPath + '/Project' , keep_path = False)
-        self.copy ('*.lib'   , dst = 'lib'    , src = projectPath + '/Build/lib', keep_path = False)
-        self.copy ('*.dll'   , dst = 'bin'    , src = projectPath + '/Build/bin', keep_path = False)
-        self.copy ('*.dylib*', dst = 'lib'    , src = projectPath + '/Build/lib', keep_path = False)
-        self.copy ('*.so'    , dst = 'lib'    , src = projectPath + '/Build/lib', keep_path = False)
-        self.copy ('*.a'     , dst = 'lib'    , src = projectPath + '/Build/lib', keep_path = False)
 
-    def package_info (self):
-        self.cpp_info.libs = [self.name]
+    def package (self):
+        packagePath = self.packagePath + '/' + self.name
+
+        copy (self, '*.h'  , src = os.path.join (self.source_folder, "Project"), dst = os.path.join (packagePath, "include")        , keep_path = False)
+        copy (self, '*.hxx', src = os.path.join (self.source_folder, "Project"), dst = os.path.join (packagePath, "include")        , keep_path = False)
+        copy (self, '*.a'  , src = self.build_folder                           , dst = os.path.join (packagePath, "lib")            , keep_path = False)
+
+        copy (self, '*.h'  , src = os.path.join (self.source_folder, "Project"), dst = os.path.join (self.package_folder, "include"), keep_path = False)
+        copy (self, '*.hxx', src = os.path.join (self.source_folder, "Project"), dst = os.path.join (self.package_folder, "include"), keep_path = False)
+        copy (self, '*.a'  , src = self.build_folder                           , dst = os.path.join (self.package_folder, "lib")    , keep_path = False)
+
+    def export_sources (self):
+        receipePath = os.path.join (self.recipe_folder, "..")
+
+        copy (self, "*.txt"        , receipePath, self.export_sources_folder)
+        copy (self, "Tests/*.hxx"  , receipePath, self.export_sources_folder)
+        copy (self, "Tests/*.cxx"  , receipePath, self.export_sources_folder)
+        copy (self, "Project/*.h"  , receipePath, self.export_sources_folder)
+        copy (self, "Project/*.cpp", receipePath, self.export_sources_folder)
