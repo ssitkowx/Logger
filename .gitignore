@@ -30,10 +30,7 @@
 *.exe
 *.out
 *.app
-/trunk/build
-/trunk/conan/conaninfo.txt
-/trunk/conan/conanbuildinfo.cmake
-/trunk/conan/conanbuildinfo.gcc
-/trunk/conan/conanbuildinfo.txt
 /build
 /Build
+/.vscode
+/CMakeUserPresets.json
