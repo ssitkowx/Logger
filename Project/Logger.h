@@ -16,23 +16,23 @@ class Logger
     public:
         enum class ELogLevel : uint8_t
         {
-            eNone,
-            eError,
-            eWarning,
-            eInfo,
-            eDebug,
-            eVerbose
+            None,
+            Error,
+            Warning,
+            Info,
+            Debug,
+            Verbose
         };
 
         static Logger * GetInst (void) { return NULL; }
 
         template <class DERIVED_TYPE, typename... ARGS>
-        constexpr void Log (const ELogLevel  v_eLogLevel,
-                            std::string_view v_module,
-                            std::string_view v_msg,
-                            ARGS &&...       v_args)
+        constexpr void Log (const ELogLevel  vLogLevel,
+                            std::string_view vModule,
+                            std::string_view vMsg,
+                            ARGS &&...       vArgs)
         {
-            static_cast <DERIVED_TYPE &>(* this).Log (v_eLogLevel, v_module, v_msg, v_args...);
+            static_cast <DERIVED_TYPE &>(* this).Log (vLogLevel, vModule, vMsg, vArgs...);
         }
 };
 
