@@ -27,10 +27,10 @@ class Logger
         static Logger * GetInst (void) { return NULL; }
 
         template <class DERIVED_TYPE, typename... ARGS>
-        constexpr void Log (const ELogLevel  vLogLevel,
-                            std::string_view vModule,
-                            std::string_view vMsg,
-                            ARGS &&...       vArgs)
+        constexpr void Log (const ELogLevel    vLogLevel,
+                            const char * const vModule,
+                            const char * const vMsg,
+                            ARGS &&...         vArgs)
         {
             static_cast <DERIVED_TYPE &>(* this).Log (vLogLevel, vModule, vMsg, vArgs...);
         }
