@@ -24,6 +24,7 @@ class Logger
             Verbose
         };
 
+        static void     SetInst (Logger * const vInst) { inst = vInst; }
         static Logger * GetInst (void) { return NULL; }
 
         template <class DERIVED_TYPE, typename... ARGS>
@@ -34,6 +35,9 @@ class Logger
         {
             static_cast <DERIVED_TYPE &>(* this).Log (vLogLevel, vModule, vMsg, vArgs...);
         }
+
+    private:
+        static inline Logger * inst;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
