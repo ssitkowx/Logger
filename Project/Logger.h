@@ -25,7 +25,7 @@ class Logger
         };
 
         static void     SetInst (Logger * const vInst) { inst = vInst; }
-        static Logger * GetInst (void) { return NULL; }
+        static Logger * GetInst (void)                 { return inst; }
 
         template <class DERIVED_TYPE, typename... ARGS>
         constexpr void Log (const ELogLevel vLogLevel,
