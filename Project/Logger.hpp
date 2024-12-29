@@ -24,8 +24,8 @@ class Logger
             Verbose
         };
 
-        static void     SetInst (Logger * const vInst) { inst = vInst; }
-        static Logger * GetInst (void)                 { return inst; }
+        static void SetInst  (Logger * const vInst) { inst = vInst; }
+        Logger *    operator ()()                   { return inst;  }
 
         template <class DERIVED_TYPE, typename... ARGS>
         constexpr void Log (const ELogLevel vLogLevel,
